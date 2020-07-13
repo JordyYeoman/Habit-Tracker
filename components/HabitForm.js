@@ -1,10 +1,11 @@
 import { Form, Field } from "@leveluptuts/fresh";
 
-const HabitForm = () => {
+const HabitForm = ({ setHabits }) => {
   return (
     <Form
       onSubmit={(data) => {
         console.log(data);
+        setHabits((prevState) => [...prevState, data.habit]);
       }}
     >
       <Field>Habit</Field>

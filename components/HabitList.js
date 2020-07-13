@@ -4,7 +4,9 @@ const HabitList = ({ habits }) => {
   return (
     <section className="section-container">
       <h2>My Habits</h2>
-      {/* {console.log(habits)} */}
+      {habits.map((habit, index) => (
+        <Habit habit={habit} key={habit} index={index} />
+      ))}
       <style jsx>{`
         .section-container {
           display: flex;
