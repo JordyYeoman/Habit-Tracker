@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Layout from "../components/Layout";
 import { withApollo } from "../lib/apollo";
 import { useQuery } from "@apollo/react-hooks";
@@ -17,10 +16,6 @@ const HELLO_QUERY = gql`
 const Home = () => {
   const { data, loading, error } = useQuery(HELLO_QUERY);
 
-  const [habits, setHabits] = useState([
-    "Do the dishes",
-    "Do the dishes again",
-  ]);
   // // console.log(habits[0].workout[0].exercise);
   // // console.log(
   // //   habits[0].workout.map((habit) => {
@@ -48,8 +43,8 @@ const Home = () => {
     <Layout>
       <div className="hero">
         <h1 className="title">{data.sayHi}</h1>
-        <HabitForm setHabits={setHabits} />
-        <HabitList habits={habits} />
+        <HabitForm />
+        <HabitList />
       </div>
     </Layout>
   );
