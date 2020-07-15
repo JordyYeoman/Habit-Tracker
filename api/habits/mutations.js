@@ -12,7 +12,8 @@ export const habitsMutations = {
         console.log(e);
       }
     },
-    async addEvent(_, { habitId, eventId }) {
+
+    async addEvent(_, { habitId, date }) {
       try {
         date.setHours(0, 0, 0, 0);
         const habit = await Habits.findOneAndUpdate(
@@ -32,11 +33,28 @@ export const habitsMutations = {
         );
         return habit;
       } catch (e) {
-        console.log(e);
+        console.log("e", e);
       }
     },
+
     async removeEvent(_, { habitId, eventId }) {
-      console.log("remove event");
+      try {
+        const habit = await Habits.findOneAndUpdate(
+          {
+            _id: habitId,
+          },
+          {
+            $pull: {
+              events: {
+                _id: eventId,
+              },
+            },
+          }
+        );
+        return habit;
+      } catch (e) {
+        console.log("e", e);
+      }
     },
   },
 };

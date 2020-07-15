@@ -27,60 +27,64 @@ const REMOVE_EVENT = gql`
   }
 `;
 
-const HabitButton = ({ date, habitId }) => {
+const HabitButton = ({ date, habitId, events }) => {
   const [addEvent] = useMutation(ADD_EVENT, {
     refetchQueries: ["getHabits"],
   });
-
   const [removeEvent] = useMutation(REMOVE_EVENT, {
     refetchQueries: ["getHabits"],
   });
 
-  const found = false;
+  const foundDate = events.find((event) => {
+    const eventDate = new Date(event.date);
+    return eventDate.getDate() === date.getDate();
+  });
 
   return (
     <span>
       {date.getMonth() + 1}/{date.getDate()}
-      {found ? (
+      {foundDate ? (
         <button
-          onClick={() => {
+          onClick={() =>
             removeEvent({
               variables: {
                 habitId,
-                eventId: "qaergfqerg",
+                eventId: foundDate._id,
               },
-            });
-          }}
+            })
+          }
         >
           X
         </button>
       ) : (
         <button
-          onClick={() => {
+          onClick={() =>
             addEvent({
               variables: {
                 habitId,
                 date,
               },
-            });
-          }}
+            })
+          }
         >
           O
         </button>
       )}
-      <style jsx>{`
-        span {
-          display: flex;
-          flex-direction: column;
-        }
-        span + span {
-          margin-left: 10px;
-        }
-        button {
-          margin-top: 1rem;
-          border: none;
-        }
-      `}</style>
+      <style jsx>
+        {`
+          span {
+            display: flex;
+            flex-direction: column;
+          }
+          span + span {
+            margin-left: 10px;
+          }
+          button {
+            margin-top: 1rem;
+            border: none;
+          }
+        `}
+      </style>
     </span>
   );
 };
